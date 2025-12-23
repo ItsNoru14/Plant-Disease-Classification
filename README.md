@@ -101,6 +101,6 @@ Model ini merupakan CNN custom ringan yang dibangun dari awal (tanpa pretrained 
   - 256 neuron + ReLU + Dropout 0.5 → mengurangi overfitting
 
 **Hasil Training Model**
-![Accuracy and Loss CNN-Base](output\Accuracy_Loss_CNN-Base.png)
+![Accuracy and Loss CNN-Base](C:\Users\super\OneDrive\Documents\VSCODE_Kuliah\src\Semester 7\klasifikasi-penyakit-tanaman\output\Accuracy_Loss_CNN-Base.png)
 
 ---
