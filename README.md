@@ -100,7 +100,36 @@ Model ini merupakan CNN custom ringan yang dibangun dari awal (tanpa pretrained 
 - Dense Layer:
   - 256 neuron + ReLU + Dropout 0.5 → mengurangi overfitting
 
-**Hasil Training Model**
+**Hasil Training Model**:
+
 ![Accuracy and Loss CNN-Base](output/Accuracy_Loss_CNN-Base.png)
 
 ---
+
+**2. EfficientNetB0 (Fine-Tuned)** 
+- **Cara kerja:**  
+  Mengambil fitur visual dari citra daun melalui backbone EfficientNetB0, lalu menambahkan **classification head** yang terdiri dari batch normalization, dense layer, dan dropout sebelum output softmax.  
+  Model hanya melakukan fine-tuning pada 15% layer terakhir, sedangkan layer awal dibekukan untuk mempertahankan fitur pretrained.  
+
+- **Tujuan:**  
+  Memanfaatkan transfer learning untuk meningkatkan akurasi klasifikasi penyakit tanaman, terutama saat dataset relatif kecil (50 kelas), tanpa perlu melatih model dari awal.  
+
+**Arsitektur Head:**
+- BatchNormalization → menstabilkan aktivasi
+- Dense(256, ReLU, L2 regularization) → ekstraksi fitur lanjutan
+- Dropout(0.3) → mengurangi overfitting
+- Dense(NUM_CLASSES, softmax) → output probabilitas per kelas
+
+**Hasil Training Model**
+![Accuracy and Loss EfficientNetB0](output/Accuracy_Loss_EfficientNetB0.png)
+
+### 3. MobileNetV3 Small (Pretrained)
+- **Cara kerja:** Layer awal pretrained dibekukan, sedangkan head custom dilatih untuk dataset lokal. Memproses citra dengan model ringan, cepat, dan efisien.  
+- **Tujuan:** Memberikan prediksi cepat untuk perangkat dengan sumber daya terbatas, tetap memanfaatkan kekuatan transfer learning.
+
+**Arsitektur Head Custom:**
+- Dense 128 neuron + ReLU + Dropout 0.4  
+- Dense 50 neuron + Softmax  
+
+**Hasil Training Model:**  
+![Accuracy and Loss MobileNetV3 Small](path_to_your_output/Accuracy_Loss_MobileNetV3Small.png)
