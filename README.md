@@ -226,7 +226,7 @@ Model ringan dan efisien untuk deployment.
 ## 📊 Confusion Matrix
 
 **CNN Base**
-![CM CNN Base](output/CM_CNN_Base.png)
+![CM CNN Base](output/CM_CNN-Base.png)
 
 **EfficientNetB0**
 ![CM EfficientNetB0](output/CM_EfficientNetB0.png)
