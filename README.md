@@ -123,6 +123,8 @@ Model ini merupakan CNN custom ringan yang dibangun dari awal (tanpa pretrained 
 **Hasil Training Model**
 ![Accuracy and Loss EfficientNetB0](output/Accuracy_Loss_EfficientNetB0.png)
 
+---
+
 ### 3. MobileNetV3 Small (Pretrained)
 - **Cara kerja:** Layer awal pretrained dibekukan, sedangkan head custom dilatih untuk dataset lokal. Memproses citra dengan model ringan, cepat, dan efisien.  
 - **Tujuan:** Memberikan prediksi cepat untuk perangkat dengan sumber daya terbatas, tetap memanfaatkan kekuatan transfer learning.
@@ -132,4 +134,14 @@ Model ini merupakan CNN custom ringan yang dibangun dari awal (tanpa pretrained 
 - Dense 50 neuron + Softmax  
 
 **Hasil Training Model:**  
-![Accuracy and Loss MobileNetV3 Small](path_to_your_output/Accuracy_Loss_MobileNetV3Small.png)
+![Accuracy and Loss MobileNetV3 Small](output/Accuracy_Loss_MobileNetV3Small.png)
+
+---
+
+### Tabel Perbandingan Performa Model
+
+| Model             | Accuracy | Precision (Weighted) | Recall (Weighted) | F1-Score (Weighted) |
+|------------------|---------|--------------------|-----------------|------------------|
+| CNN Base     | 80.28%  | 0.8113             | 0.8028          | 0.7964           |
+| EfficientNetB0    | 89.55%  | 0.8949             | 0.8955          | 0.8943           |
+| MobileNetV3Small  | 88.47%  | 0.8833             | 0.8847          | 0.8829           |
