@@ -62,22 +62,45 @@ Hal ini juga dilakukan berdasarkan keterbatasan device yang digunakan sehingga f
 ## Preprocessing
 
 Sebelum dilakukan klasifikasi, dataset melalui beberapa proses Preprocessing berikut:
-- ## Filtering Class : Melakukan Filtering dengan metode mengatur *Tresshold* hanya kelas yang memiliki ≥100 gambar yang dipertahankan, dan memilih *50 kelas dengan gambar terbanyak*. lalu menyimpan metaadata yang berisi daftar kelas dan jumlah gambar untuk reproduksibilitas.
+- *Filtering Class* : Melakukan Filtering dengan metode mengatur *Tresshold* hanya kelas yang memiliki ≥100 gambar yang dipertahankan, dan memilih *50 kelas dengan gambar terbanyak*. lalu menyimpan metaadata yang berisi daftar kelas dan jumlah gambar untuk reproduksibilitas.
 
-- ## Splitting Dataset : Membuat pembagian data dengan rasio 80% Training, 10% Validation, dan 10% Testing dari dataset yang sudah difilter. Output yang tercipta adalah 3 CSV yang berisi filepath dan label untuk masing-masing subset.
+- *Splitting Dataset* : Membuat pembagian data dengan rasio 80% Training, 10% Validation, dan 10% Testing dari dataset yang sudah difilter. Output yang tercipta adalah 3 CSV yang berisi filepath dan label untuk masing-masing subset.
 
-- ## Label Encoding : Mengubah label kategori menjadi Interger ID (label_id) agar bisa digunakan model, lalu menyimpan hasil mapping label ke dalam bentuk JSON untuk prediksi di streamlit.\
+- *Label Encoding* : Mengubah label kategori menjadi Interger ID (label_id) agar bisa digunakan model, lalu menyimpan hasil mapping label ke dalam bentuk JSON untuk prediksi di streamlit.\
 
-- ## Preprocessing Model# : Pada tahap ini terdapat 2 jenis preprocessing yang dilakukan yakni :
+- *Preprocessing Model* : Pada tahap ini terdapat 2 jenis preprocessing yang dilakukan yakni :
 
-    - *Preprocessing CNN Base (No Pretrained)* : 
+    - Preprocessing CNN Base (No Pretrained) : 
         - *Resize* ke ukuran (224×224).
         - *Normalisasi* pixel ke rentang [0, 1].
         - Dataset diubah menjadi *tf.data.Dataset* untuk efisiensi.
-        
-    - *Preprocessing CNN Pretrained (EfficientNetB0 dan MobileNetV3Small)* : 
+
+    - Preprocessing CNN Pretrained (EfficientNetB0 dan MobileNetV3Small) : 
         - *Class weight* untuk mengatasi ketidakseimbangan kelas saat training model.
         - *Resize* ke ukuran (224×224).
         - Base dataset dibuat sebagai *tf.data.Dataset* untuk efisiensi pipeline.
         - *EfficientNetB0*: menggunakan preprocess_input dari tensorflow.keras.applications.efficientnet
         - *MobileNetV3Small*: menggunakan preprocess_input dari tensorflow.keras.applications.mobilenet_v3
+
+---
+
+## Model Yang Digunakan
+
+**1. CNN Base Light**
+Model ini merupakan CNN custom ringan yang dibangun dari awal (tanpa pretrained weights).  
+- **Cara kerja:** Memproses citra daun melalui beberapa blok konvolusi untuk mengekstrak fitur visual, kemudian fitur-fitur tersebut diratakan dengan GlobalAveragePooling dan diteruskan ke dense layer untuk prediksi kelas penyakit.  
+- **Tujuan:** Memberikan prediksi penyakit tanaman secara efisien pada dataset terfilter (50 kelas) dengan sumber daya komputasi terbatas. Ringan, cepat dilatih, dan mudah diintegrasikan dengan pipeline preprocessing yang ada. 
+
+**Arsitektur:**
+- Input: `(128, 128, 3)`
+- 3 Convolutional Blocks:
+  - Setiap blok: 2 × Conv2D lalu melalui layer BatchNormalization, lalu layer ReLU, dan terakhir layer MaxPooling.
+  - Jumlah filter meningkat dari 32 → 64 → 128 per blok untuk menangkap fitur lebih kompleks.
+- GlobalAveragePooling2D : meratakan fitur sebelum masuk ke dense layer.
+- Dense Layer:
+  - 256 neuron + ReLU + Dropout 0.5 → mengurangi overfitting
+
+**Hasil Training Model**
+![Accuracy and Loss CNN-Base](output\Accuracy_Loss_CNN-Base.png)
+
+---
