@@ -245,9 +245,9 @@ Model ringan dan efisien untuk deployment.
 **MobileNetV3Small** menjadi kompromi ideal antara akurasi dan efisiensi, cocok untuk deployment pada perangkat dengan sumber daya terbatas.
 
 Namun kedua model pretrained menunjukkan gejala overfitting, walaupun tidak signifikan hal ini dapat dipengaruhi oleh berbagai faktor, yakni:
-    - Efek dari fine-tuned yang tidak stabil
-    - Pola gambar yang terlalu seragam
-    - Dataset yang tidak stabil
+- Efek dari fine-tuned yang tidak stabil
+- Pola gambar yang terlalu seragam
+- Dataset yang tidak stabil
 
 Walaupun hasil dari kedua model Pretrained terlihat bagus, Overfitting tetap terjadi meskipun hanya sedikit.
 
