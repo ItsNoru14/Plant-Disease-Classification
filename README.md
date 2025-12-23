@@ -11,20 +11,68 @@
 <h1 align="center"> Deskripsi Project </h1>
 
 Plant Disease Classification adalah aplikasi berbasis *Deep Learning* yang dirancang untuk mengklasifikasikan penyakit pada tanaman dari berdasarkan citra. 
-Proyek ini memanfaatkan model Convolutional Neural Networks (CNN), termasuk model pretrained seperti EfficientNetB0 dan MobileNetV3 Small, untuk mengenali berbagai jenis penyakit tanaman secara otomatis.
+Proyek ini memanfaatkan model Convolutional Neural Networks (CNN), termasuk model pretrained seperti EfficientNetB0 dan MobileNetV3Small, untuk mengenali berbagai jenis penyakit tanaman secara otomatis.
 
 ---
 
 Aplikasi ini bertujuan untuk:  
-- Membantu petani atau peneliti mendeteksi penyakit tanaman lebih cepat dan akurat.  
-- Menjadi prototipe penelitian yang bisa dikembangkan lebih lanjut untuk sistem pertanian cerdas.  
-- Memberikan visualisasi probabilitas prediksi untuk setiap kelas penyakit.
+- Membangun model *klasifikasi penyakit pada tanaman* untuk memprediksi penyakit pada tanaman bedasarkan citra.
+- *Evaluasi performa* dengan menguji beberapa model Deep Learning seperti Convolutional Neural Networks (CNN), EfficientNetB0, dan MobileNetV3Small.
+- Membangun aplikasi berbasis web dengan menggunakan *Streamlit*.
 
 ### Fitur Utama
 - Upload gambar daun tanaman (format JPG / PNG)  
 - Prediksi penyakit dengan confidence score  
 - Visualisasi probabilitas prediksi untuk semua kelas  
-- Mendukung berbagai model CNN (CNN Base, EfficientNetB0, MobileNetV3 Small)  
+- Mendukung berbagai model CNN (CNN Base, EfficientNetB0, MobileNetV3Small)  
+
+---
 
 ### Dataset
-Dataset yang digunakan diambil dari **[High Quality Crop Disease Image Dataset](https://www.kaggle.com/datasets/akarshangupta/high-quality-crop-disease-image-dataset-for-cnns)** yang terdiri dari 134 kelas dan 50.000 lebih gambar.
+Dataset yang digunakan diambil dari **[High Quality Crop Disease Image Dataset](https://www.kaggle.com/datasets/akarshangupta/high-quality-crop-disease-image-dataset-for-cnns)** 
+- 134 kelas
+- ± 50.000 gambar.
+
+Sebelum menjalankan Jupyter perhatikan struktur folder berikut :
+
+project-root/
+│
+├─ data/    ← Letakkan file ZIP dataset di sini sebelum menjalankan Jupyter
+├─ metadata/
+├─ splits/
+├─ models/
+├─ app.py
+├─ Crop_Disease_Classification.ipynb
+└─ ...
+
+### Persiapan Dataset
+Dilakukan filtering pada dataset karena beberapa alasan berikut :
+- Dataset awal terdiri dari 134 kelas, tetapi setiap kelas memiliki jumlah gambar yang berbeda-beda. Beberapa kelas mungkin hanya memiliki puluhan gambar, sementara kelas lain ratusan atau ribuan.
+- Jumlah kelas yang terlalu banyak juga bisa menyebabkan proses training lambat serta memakan memori besar.
+- Filtering dilakukan dengan mekanisme :
+    - Filter kelas dengan jumlah gambar ≥ 100.
+    - Dari kelas yang lolos filter, pilih 50 kelas dengan gambar terbanyak.
+    - Salin gambar dari kelas terpilih ke folder baru data/dataset_filtered.
+    - Simpan metadata kelas dan jumlah gambar untuk referensi dan reproducibility.
+
+Hal ini juga dilakukan berdasarkan keterbatasan device yang digunakan sehingga filtering ditujukan untuk menjaga *Stabilitas Model*, *Efisiensi Komputasi*, *Representatif Data*, dan *Mengurangi Noise*.
+
+---
+
+### Preprocessing
+
+Sebelum dilakukan klasifikasi, dataset melalui beberapa proses Preprocessing berikut:
+- *Filtering Class* : Melakukan Filtering dengan metode mengatur *Tresshold* hanya kelas yang memiliki ≥100 gambar yang dipertahankan, dan memilih *50 kelas dengan gambar terbanyak*. lalu menyimpan metaadata yang berisi daftar kelas dan jumlah gambar untuk reproduksibilitas.
+- *Splitting Dataset* : Membuat pembagian data dengan rasio 80% Training, 10% Validation, dan 10% Testing dari dataset yang sudah difilter. Output yang tercipta adalah 3 CSV yang berisi filepath dan label untuk masing-masing subset.
+- *Label Encoding* : Mengubah label kategori menjadi Interger ID (label_id) agar bisa digunakan model, lalu menyimpan hasil mapping label ke dalam bentuk JSON untuk prediksi di streamlit.
+- *Preprocessing Model* : Pada tahap ini terdapat 2 jenis preprocessing yang dilakukan yakni :
+        - *Preprocessing CNN Base (No Pretrained)* : 
+                - *Resize* ke ukuran (224×224).
+                - *Normalisasi* pixel ke rentang [0, 1].
+                - Dataset diubah menjadi *tf.data.Dataset* untuk efisiensi
+        - *Preprocessing CNN Pretrained (EfficientNetB0 dan MobileNetV3Small)* : 
+                - *Class weight* untuk mengatasi ketidakseimbangan kelas saat training model.
+                - *Resize* ke ukuran (224×224).
+                - Base dataset dibuat sebagai *tf.data.Dataset* untuk efisiensi pipeline.
+                - *EfficientNetB0*: menggunakan preprocess_input dari tensorflow.keras.applications.efficientnet
+                - *MobileNetV3Small*: menggunakan preprocess_input dari tensorflow.keras.applications.mobilenet_v3
