@@ -26,24 +26,52 @@ Aplikasi ini bertujuan untuk:
 - Visualisasi probabilitas prediksi untuk semua kelas  
 - Mendukung berbagai model CNN (CNN Base, EfficientNetB0, MobileNetV3Small)  
 
+
+---
+
+## Instalasi dan Setup
+
+### 1. Clone Repository
+```bash
+git clone https://github.com/ItsNoru14/Plant-Disease-Classification.git
+cd Plant-Disease-Classification
+
+### 2. Virtual Environment
+Direkomendasikan menggunakan Python >=3.10:
+
+```bash
+.venv\Scripts\activate
+
+### 3. Install Depedencies
+```bash
+pip install streamlit==1.37.0
+pip install tensorflow>=2.20.0
+pip install scikit-learn>=1.7.2
+pip install joblib>=1.5.3
+pip install seaborn>=0.13.2
+pip install matplotlib>=3.10.8
+
+### 4. Run Streamlit
+untuk menjalankan streamlit disarankan untuk masuk ke Virutal Environment terlebih dahulu
+```bash
+streamlit run app.py
+
+### 5. Struktur folder
+```bash
+Plant-Disease-Classification/
+│
+├─ data/                  # Dataset citra daun
+├─ splits/                # File CSV split train/val/test
+├─ encoders/              # File label encoder JSON
+├─ app.py                 # File utama Streamlit
+├─ output/                 # Hasil Visualisasi
+
 ---
 
 ## Dataset
 Dataset yang digunakan diambil dari **[High Quality Crop Disease Image Dataset](https://www.kaggle.com/datasets/akarshangupta/high-quality-crop-disease-image-dataset-for-cnns)** 
 - 134 kelas
 - ± 50.000 gambar.
-
-Sebelum menjalankan Jupyter perhatikan struktur folder berikut :
-
-project-root/
-│
-├─ data/    ← Letakkan file ZIP dataset di sini sebelum menjalankan Jupyter
-├─ metadata/
-├─ splits/
-├─ models/
-├─ app.py
-├─ Crop_Disease_Classification.ipynb
-└─ ...
 
 ## Persiapan Dataset
 Dilakukan filtering pada dataset karena beberapa alasan berikut :
@@ -145,3 +173,26 @@ Model ini merupakan CNN custom ringan yang dibangun dari awal (tanpa pretrained 
 | CNN Base     | 80.28%  | 0.8113             | 0.8028          | 0.7964           |
 | EfficientNetB0    | 89.55%  | 0.8949             | 0.8955          | 0.8943           |
 | MobileNetV3Small  | 88.47%  | 0.8833             | 0.8847          | 0.8829           |
+
+---
+
+### Confusion Matrix
+**1. CNN-Base**
+![Confusion Matrix CNN-Base](output/CM_CNN_Base.png)
+
+**2. EfficientNetB0**
+![Confusion Matrix EfficientNetB0](output/CM_EfficientNetB0.png)
+
+**3. MobileNetV3Small**
+![Confusion Matrix MobileNetV3Small](output/CM_MobileNetV3Small.png)
+
+### Analisis Hasil Model
+### 1. CNN Base
+Model **CNN Base** adalah CNN custom ringan tanpa pretrained weights. Model ini berhasil mencapai **akurasi 80,28%**, dengan **precision 0,80**, **recall 0,80**, dan **f1-score 0,79**. Visualisasi training menunjukkan peningkatan akurasi yang cepat di awal dan stabilisasi setelah beberapa epoch, sedangkan loss menurun konsisten. Model ini efisien, cepat dilatih, dan cocok untuk baseline atau deployment dengan sumber daya terbatas. Beberapa kelas dengan sampel kecil masih memiliki performa prediksi lebih rendah.
+
+### 2. EfficientNetB0
+Model **EfficientNetB0** menggunakan pretrained weights dari ImageNet dengan fine-tuning sebagian lapisan atas. Model ini mencapai **akurasi 89,55%**, dengan **precision 0,88**, **recall 0,89**, dan **f1-score 0,88**, lebih baik dibanding CNN Base. Transfer learning memungkinkan model memanfaatkan fitur pretrained, sehingga mampu menangkap pola visual daun lebih kompleks dan memberikan performa lebih stabil pada seluruh kelas. Loss training menurun lebih cepat dan akurasi validasi lebih tinggi, menandakan kemampuan generalisasi yang lebih baik.
+
+### 3. MobileNetV3Small
+Model **MobileNetV3Small** juga menggunakan pretrained weights dari ImageNet dengan fine-tuning sebagian lapisan. Model ini lebih ringan dibanding EfficientNetB0 namun tetap cukup akurat, mencapai **akurasi 88,47%**, dengan **precision 0,87**, **recall 0,87**, dan **f1-score 0,87**. Model ini cocok untuk deployment pada perangkat dengan resource terbatas, tetap mempertahankan performa tinggi berkat transfer learning. Visualisasi menunjukkan tren training yang stabil dengan loss menurun konsisten.
+
