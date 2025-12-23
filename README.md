@@ -1,9 +1,9 @@
 # <h1 align="center">🌿 Plant Disease Classification</h1>
 <div align="center">
-  <img src="https://storage.googleapis.com/kaggle-datasets-images/8750529/13752024/1bc6f9b29f9e8fe23378733a74614627/dataset-cover.png?t=2025-11-16-09-14-22" alt="Gambar Utama" width="500" height="300">
+  <img src="https://media.springernature.com/lw685/springer-static/image/art%3A10.1038%2Fs41598-023-46218-5/MediaObjects/41598_2023_46218_Fig2_HTML.jpg" alt="Gambar Utama" width="500" height="300">
   <p>
     <small>
-      Sumber Image : <a href="https://www.kaggle.com/datasets/akarshangupta/high-quality-crop-disease-image-dataset-for-cnns">Access Here.....</a>
+      Sumber Image : <a href="https://media.springernature.com/lw685/springer-static/image/art%3A10.1038%2Fs41598-023-46218-5/MediaObjects/41598_2023_46218_Fig2_HTML.jpg">Access Here.....</a>
     </small>
   </p>
 </div>
