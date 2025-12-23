@@ -20,7 +20,7 @@ Aplikasi ini bertujuan untuk:
 - *Evaluasi performa* dengan menguji beberapa model Deep Learning seperti Convolutional Neural Networks (CNN), EfficientNetB0, dan MobileNetV3Small.
 - Membangun aplikasi berbasis web dengan menggunakan *Streamlit*.
 
-### Fitur Utama
+## Fitur Utama
 - Upload gambar daun tanaman (format JPG / PNG)  
 - Prediksi penyakit dengan confidence score  
 - Visualisasi probabilitas prediksi untuk semua kelas  
@@ -28,7 +28,7 @@ Aplikasi ini bertujuan untuk:
 
 ---
 
-### Dataset
+## Dataset
 Dataset yang digunakan diambil dari **[High Quality Crop Disease Image Dataset](https://www.kaggle.com/datasets/akarshangupta/high-quality-crop-disease-image-dataset-for-cnns)** 
 - 134 kelas
 - ± 50.000 gambar.
@@ -45,7 +45,7 @@ project-root/
 ├─ Crop_Disease_Classification.ipynb
 └─ ...
 
-### Persiapan Dataset
+## Persiapan Dataset
 Dilakukan filtering pada dataset karena beberapa alasan berikut :
 - Dataset awal terdiri dari 134 kelas, tetapi setiap kelas memiliki jumlah gambar yang berbeda-beda. Beberapa kelas mungkin hanya memiliki puluhan gambar, sementara kelas lain ratusan atau ribuan.
 - Jumlah kelas yang terlalu banyak juga bisa menyebabkan proses training lambat serta memakan memori besar.
@@ -59,20 +59,25 @@ Hal ini juga dilakukan berdasarkan keterbatasan device yang digunakan sehingga f
 
 ---
 
-### Preprocessing
+## Preprocessing
 
 Sebelum dilakukan klasifikasi, dataset melalui beberapa proses Preprocessing berikut:
-- *Filtering Class* : Melakukan Filtering dengan metode mengatur *Tresshold* hanya kelas yang memiliki ≥100 gambar yang dipertahankan, dan memilih *50 kelas dengan gambar terbanyak*. lalu menyimpan metaadata yang berisi daftar kelas dan jumlah gambar untuk reproduksibilitas.
-- *Splitting Dataset* : Membuat pembagian data dengan rasio 80% Training, 10% Validation, dan 10% Testing dari dataset yang sudah difilter. Output yang tercipta adalah 3 CSV yang berisi filepath dan label untuk masing-masing subset.
-- *Label Encoding* : Mengubah label kategori menjadi Interger ID (label_id) agar bisa digunakan model, lalu menyimpan hasil mapping label ke dalam bentuk JSON untuk prediksi di streamlit.
-- *Preprocessing Model* : Pada tahap ini terdapat 2 jenis preprocessing yang dilakukan yakni :
-        - *Preprocessing CNN Base (No Pretrained)* : 
-                - *Resize* ke ukuran (224×224).
-                - *Normalisasi* pixel ke rentang [0, 1].
-                - Dataset diubah menjadi *tf.data.Dataset* untuk efisiensi
-        - *Preprocessing CNN Pretrained (EfficientNetB0 dan MobileNetV3Small)* : 
-                - *Class weight* untuk mengatasi ketidakseimbangan kelas saat training model.
-                - *Resize* ke ukuran (224×224).
-                - Base dataset dibuat sebagai *tf.data.Dataset* untuk efisiensi pipeline.
-                - *EfficientNetB0*: menggunakan preprocess_input dari tensorflow.keras.applications.efficientnet
-                - *MobileNetV3Small*: menggunakan preprocess_input dari tensorflow.keras.applications.mobilenet_v3
+- ## Filtering Class : Melakukan Filtering dengan metode mengatur *Tresshold* hanya kelas yang memiliki ≥100 gambar yang dipertahankan, dan memilih *50 kelas dengan gambar terbanyak*. lalu menyimpan metaadata yang berisi daftar kelas dan jumlah gambar untuk reproduksibilitas.
+
+- ## Splitting Dataset : Membuat pembagian data dengan rasio 80% Training, 10% Validation, dan 10% Testing dari dataset yang sudah difilter. Output yang tercipta adalah 3 CSV yang berisi filepath dan label untuk masing-masing subset.
+
+- ## Label Encoding : Mengubah label kategori menjadi Interger ID (label_id) agar bisa digunakan model, lalu menyimpan hasil mapping label ke dalam bentuk JSON untuk prediksi di streamlit.\
+
+- ## Preprocessing Model# : Pada tahap ini terdapat 2 jenis preprocessing yang dilakukan yakni :
+
+    - *Preprocessing CNN Base (No Pretrained)* : 
+        - *Resize* ke ukuran (224×224).
+        - *Normalisasi* pixel ke rentang [0, 1].
+        - Dataset diubah menjadi *tf.data.Dataset* untuk efisiensi.
+        
+    - *Preprocessing CNN Pretrained (EfficientNetB0 dan MobileNetV3Small)* : 
+        - *Class weight* untuk mengatasi ketidakseimbangan kelas saat training model.
+        - *Resize* ke ukuran (224×224).
+        - Base dataset dibuat sebagai *tf.data.Dataset* untuk efisiensi pipeline.
+        - *EfficientNetB0*: menggunakan preprocess_input dari tensorflow.keras.applications.efficientnet
+        - *MobileNetV3Small*: menggunakan preprocess_input dari tensorflow.keras.applications.mobilenet_v3
