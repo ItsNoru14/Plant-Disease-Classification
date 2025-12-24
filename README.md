@@ -36,7 +36,7 @@ Proyek ini bertujuan untuk:
 
 ## ⚙️ Instalasi dan Setup
 
-Aplikasi Project ini dapat diakses secara publik melalui <a href="https://plant-disease-classification-dimas.streamlit.app/">
+Aplikasi Project ini dapat diakses secara publik melalui [https://plant-disease-classification-dimas.streamlit.app/](https://plant-disease-classification-dimas.streamlit.app/)
 
 ### 1. Clone Repository
 
