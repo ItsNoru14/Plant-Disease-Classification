@@ -217,11 +217,11 @@ Model ringan dan efisien untuk deployment.
 
 ## 📈 Perbandingan Performa Model
 
-| Model            | Accuracy | Precision (Weighted) | Recall (Weighted) | F1-Score (Weighted) |
-| ---------------- | -------- | -------------------- | ----------------- | ------------------- |
-| CNN Base         | 80.28%   | 0.8113               | 0.8028            | 0.7964              |
-| EfficientNetB0   | 89.55%   | 0.8949               | 0.8955            | 0.8943              |
-| MobileNetV3Small | 88.47%   | 0.8833               | 0.8847            | 0.8829              |
+| Model            | Accuracy | Hasil Analisis       | 
+| ---------------- | -------- | -------------------- | 
+| CNN Base         | 80.28%   | **CNN Base** memberikan performa baseline yang baik dengan training cepat, namun masih kurang optimal pada kelas dengan sampel kecil.| 
+| EfficientNetB0   | 89.55%   | **EfficientNetB0** menunjukkan performa terbaik secara keseluruhan berkat transfer learning dan fine-tuning, dengan generalisasi yang lebih stabil.|
+| MobileNetV3Small | 88.47%   | **MobileNetV3Small** menjadi kompromi ideal antara akurasi dan efisiensi, cocok untuk deployment pada perangkat dengan sumber daya terbatas.|
 
 ---
 
@@ -238,15 +238,9 @@ Model ringan dan efisien untuk deployment.
 
 ---
 
-## 📝 Analisis Hasil
+## 📝 Tantangan
 
-**CNN Base** memberikan performa baseline yang baik dengan training cepat, namun masih kurang optimal pada kelas dengan sampel kecil.
-
-**EfficientNetB0** menunjukkan performa terbaik secara keseluruhan berkat transfer learning dan fine-tuning, dengan generalisasi yang lebih stabil.
-
-**MobileNetV3Small** menjadi kompromi ideal antara akurasi dan efisiensi, cocok untuk deployment pada perangkat dengan sumber daya terbatas.
-
-Namun kedua model pretrained menunjukkan gejala overfitting, walaupun tidak signifikan hal ini dapat dipengaruhi oleh berbagai faktor, yakni:
+Pada kedua model pretrained menunjukkan gejala overfitting, walaupun tidak signifikan hal ini dapat dipengaruhi oleh berbagai faktor, yakni:
 - Efek dari fine-tuned yang tidak stabil
 - Pola gambar yang terlalu seragam
 - Dataset yang tidak stabil
