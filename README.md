@@ -164,8 +164,6 @@ Output berupa file CSV yang berisi *filepath* dan *label* untuk masing-masing su
 
 ### 1. CNN Base Light
 
-CNN custom ringan tanpa pretrained weights.
-
 **Karakteristik:**
 
 * Input: `(128, 128, 3)`
@@ -183,9 +181,7 @@ Sebagai baseline model yang ringan, cepat dilatih, dan cocok untuk resource terb
 
 ---
 
-### 2. EfficientNetB0 (Fine-Tuned)
-
-Menggunakan pretrained weights ImageNet dengan fine-tuning 15% layer terakhir.
+### 2. EfficientNetB0
 
 **Classification Head:**
 
@@ -200,9 +196,7 @@ Menggunakan pretrained weights ImageNet dengan fine-tuning 15% layer terakhir.
 
 ---
 
-### 3. MobileNetV3Small (Pretrained)
-
-Model ringan dan efisien untuk deployment.
+### 3. MobileNetV3Small
 
 **Classification Head:**
 
@@ -220,7 +214,7 @@ Model ringan dan efisien untuk deployment.
 | Model            | Accuracy | Hasil Analisis       | 
 | ---------------- | -------- | -------------------- | 
 | CNN Base         | 80.28%   | **CNN Base** memberikan performa baseline yang baik dengan training cepat, namun masih kurang optimal pada kelas dengan sampel kecil.| 
-| EfficientNetB0   | 89.55%   | **EfficientNetB0** menunjukkan performa terbaik secara keseluruhan berkat transfer learning dan fine-tuning, dengan generalisasi yang lebih stabil.|
+| EfficientNetB0   | 89.55%   | **EfficientNetB0** menunjukkan performa terbaik secara keseluruhan berkat transfer learning dengan generalisasi yang lebih stabil.|
 | MobileNetV3Small | 88.47%   | **MobileNetV3Small** menjadi kompromi ideal antara akurasi dan efisiensi, cocok untuk deployment pada perangkat dengan sumber daya terbatas.|
 
 ---
